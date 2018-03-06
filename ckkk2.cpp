@@ -37,8 +37,9 @@ void findprimes() {
 }
 
 int main() {
-    int n,a,b,c,sz;
+    int t,n,a,b,c,sz;
     long long int actualn;
+    cin >> t;
 
     findprimes();
 

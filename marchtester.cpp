@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-
+#include <cstdlib>
 using namespace std;
 typedef long long ll;
 #define Debug(x) cout << "> " << #x << " : " << x << "\n";
@@ -72,14 +72,17 @@ void bsleft(int l, int r, long long int x, int i){
 	//inclusive bounds l and r
 	// x is the a[i] being searched
 	//org is cs[i] for comparison
+	// if(i == 3) cout << "8 is here with l: " << l << " r: " << r<<"\n";
 	long long int org = lcs[i];
 	if(l > r) return;
 	if(l < 0) return ;
 	if(r >= n) return ;
 	int mid = l+r;
 	mid = mid/2;
+	// if(i == 3) cout << "8 is here with l: " << l << " r: " << r<<"\n";
 	//if l == r == 0 -> doesnt matter
 	if(l == r && l == 0){
+		// Debug(x)
 		ur[0] += 1;
 		ur[i] -= 1;
 		return;
@@ -116,6 +119,7 @@ void bsleft(int l, int r, long long int x, int i){
 		}
 		bsleft(l,mid-1,x,i);
 	}
+	// if(i == 3) cout << "8 is here with l: " << l << " r: " << r<<"\n";
 }
 
 int main()
@@ -129,7 +133,7 @@ int main()
     cin.tie(NULL);cout.tie(NULL);
 
  	tests{
- 		 cin >> n;
+ 		 n = 10;
  		 if(n == 1){
  		 	cin >> n;
  		 	cout << "0\n";
@@ -169,7 +173,7 @@ int main()
  			// }
  			// cout<<"\n";
  		}
-
+ 		cout << "\nVotes:\n";
  		long long int add = 0;
  		For(i,0,n){
  			add += ur[i];
@@ -177,6 +181,45 @@ int main()
  			cout << vote[i] << " ";
  		}
  		cout << "\n";
+ 		//checker
+ 		long long int ans[n] = {0};
+ 		For(i,0,n-1){
+ 			ans[i+1] += 1;
+ 			long long int sum = a[i+1];
+ 			For(j,i+2,n){
+ 				if(sum <= a[i]){
+ 					ans[j] += 1;
+ 					sum += a[j];
+ 				}else{
+ 					break;
+ 				}
+ 			}
+ 		}
+ 		For(i,1,n){
+ 			ans[i-1] += 1;
+ 			long long int sum = a[i-1];
+ 			for(int j = i-2; j >= 0;j--){
+ 				if(sum <= a[i]){
+ 					ans[j] += 1;
+ 					sum += a[j];
+ 				}else{
+ 					break;
+ 				}
+ 			}
+ 		}
+ 		int flag = 0;
+ 		cout <<"Answers:\n";
+ 		For(i,0,n){
+ 			cout << ans[i] << " ";
+ 			// Debug(vote[i])
+ 			// Debug(ans[i])
+ 			if(vote[i] != ans[i]){
+ 				// Debug(i);
+ 				flag = 1;
+ 			}
+ 		}
+ 		if(flag) cout << "\nMISTAKE on "<< t <<" \n";
+ 		// cout << RAND_MAX;
  	}   	
     return 0;
 }

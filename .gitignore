@@ -1,0 +1,4 @@
+#Compiled source
+*.out
+#in/out files
+*.txt

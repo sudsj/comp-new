@@ -42,6 +42,12 @@ void lambdafunctor2(std::vector<double>& v, int eps, std::vector<int> &z){
 	 );
 }
 
+bool simplecompare(int i, int j){
+	return i > j; //i comes before j if this returns true
+}
+
+
+
 int main()
 {
     #ifndef ONLINE_JUDGE
@@ -59,6 +65,38 @@ int main()
     lambdafunctor(v);
     lambdafunctor2(v, 5, z);
     For(i,0,5) Debug(v[i])
- 	For(i,0,5) Debug(z[i])   	
+ 	For(i,0,5) Debug(z[i])   
+
+ 	//initialise variables with lambda exp
+ 	int a = [](int x) {int y = 1; while(x) y *= x--; return y;}(5);
+ 	//initialises a to 5!
+ 	//[](int x) {int y = 1; while(x) y *= x--; return y;} is the lambda function
+ 	
+ 	Debug(a)
+
+ 	//using a pointer to a lambda expression
+ 	auto funcm = [](int a, int b) -> int { return a*b; };
+	cout << funcm(2, 3) << endl;
+
+	//for sorting
+	std::vector<int> vs;
+	For(i,0,10) vs.push_back(i+1);
+	random_shuffle(vs.begin(), vs.end());
+	// For(i,0,10) Debug(vs[i])
+	sort(vs.begin(), vs.end());
+	For(i,0,10) cout << vs[i] << " ";cout << "\n";
+	random_shuffle(vs.begin(), vs.end());
+	sort(vs.begin(), vs.end(), simplecompare);
+	For(i,0,10) cout << vs[i] << " ";cout << "\n";
+	//using lambda exp
+	random_shuffle(vs.begin(), vs.end());
+
+	sort(vs.begin(), vs.end(),
+	 [](int i, int j) -> bool {
+	 	return i > j;
+	 } 
+	 );
+	//same as simplecompare function
+	For(i,0,10) cout << vs[i] << " ";cout << "\n";
     return 0;
 }
